@@ -87,4 +87,3 @@ AlwaysBreakAfterDefinitionReturnType: None
 AllowShortIfStatementsOnASingleLine: true
 Macros:
   - fn=auto
-IgnorePragmas: true

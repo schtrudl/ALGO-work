@@ -6,8 +6,10 @@ import sys
 from reference import is_valid, mach, read_input
 
 parser = argparse.ArgumentParser(description="Verify the integrity of the solution")
-parser.add_argument("input", help="Path to the input file")
-parser.add_argument("solution", help="Path to the solution file to verify")
+parser.add_argument("input", help="Path to the input file of the problem (usually .in)")
+parser.add_argument(
+    "solution", help="Path to the solution file to verify (usually .out)"
+)
 args = parser.parse_args()
 
 

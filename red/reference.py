@@ -73,10 +73,21 @@ def mach(
 
 
 if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="Find the maximum independent set of edges"
+    )
+    parser.add_argument(
+        "--all", help="Return all velid solutions of maximum size", action="store_true"
+    )
+    args = parser.parse_args()
     n, nbhs, edges = read_input(sys.stdin)
     best = mach(edges, nbhs, 0, [])
-    print_best(best)
-    # print all possible solutions
-    # mach(edges, nbhs, 0, [], target=len(best))
-    # for set in best_edges:
-    #    print_best(list(set))
+    if not args.all:
+        print_best(best)
+    else:
+        # print all possible solutions
+        mach(edges, nbhs, 0, [], target=len(best))
+        for set in best_edges:
+            print_best(list(set))

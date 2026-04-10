@@ -43,6 +43,7 @@ void obhod(size_t idx) {
 
 int main(int argc, char const* argv[]) {
     // read input data from stdin
+    // BTW: graph is always undirected
     scanf("%zu", &n);
     // IDEA: we can pack matrix in ints
     // IDEA: we do not need whole matrix
@@ -51,7 +52,10 @@ int main(int argc, char const* argv[]) {
         for (size_t j = 0; j < n; j++) {
             int t;
             scanf("%d", &t);
-            data[i * n + j] = t;
+            if (i < j) {
+                // XXX: why are indexes set this way
+                data[j * n + i] = t;
+            }
         }
     }
 

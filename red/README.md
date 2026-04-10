@@ -10,7 +10,7 @@
 
 ## Navodila za poganjanje
 
-prevajanje z: `clang -O3 -march=native algo1.cpp -o algo1` (lahko tudi gcc)
+prevajanje z: `clang++ -O3 -march=native algo1.cpp -o algo1` (lahko tudi g++)
 
 pri poganjanju se na stdin postavi vhodne podatke: `./algo1 < test00.in` izhod je na stdout
 

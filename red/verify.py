@@ -3,7 +3,7 @@
 import argparse
 import sys
 
-from reference import is_valid, mach, read_input
+from reference import is_valid_pair, mach, read_input
 
 parser = argparse.ArgumentParser(description="Verify the integrity of the solution")
 parser.add_argument("input", help="Path to the input file of the problem (usually .in)")
@@ -36,12 +36,14 @@ for i, (x, y) in enumerate(pairs):
         errors.append(f"({x + 1}, {y + 1}) is not an edge in the graph!")
 
 # Check 2: No two pairs share a common neighbor
-for i, (x1, y1) in enumerate(pairs):
-    for j, (x2, y2) in enumerate(pairs):
+for i, vu1 in enumerate(pairs):
+    for j, vu2 in enumerate(pairs):
         if i == j:
             continue
         # Check if any vertex from pair i is a neighbor of any vertex from pair j
-        if not is_valid(nbhs, (x1, y1), [(x2, y2)]):
+        if not is_valid_pair(nbhs, vu1, vu2):
+            x1, y1 = vu1
+            x2, y2 = vu2
             errors.append(
                 f"Pairs ({x1 + 1}, {y1 + 1}) and ({x2 + 1}, {y2 + 1}) share a common neighbor"
             )

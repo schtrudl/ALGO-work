@@ -51,11 +51,7 @@ int main(int argc, char const* argv[]) {
         for (size_t j = 0; j < n; j++) {
             int t;
             scanf("%d", &t);
-
-            if (i < j) {
-                data[i * n + j] = t;
-                data[j * n + i] = t;
-            }
+            data[i * n + j] = t;
         }
     }
 

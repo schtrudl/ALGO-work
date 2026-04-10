@@ -19,18 +19,27 @@ def read_input(
 
     edges = []
     for i in range(n):
-        for j in range(i + 1, n):
+        for j in range(n):
             if nbhs[i][j]:
                 edges.append((i, j))
 
     return n, nbhs, edges
 
 
-def is_valid(nbhs, vu: tuple[int, int], current: list[tuple[int, int]]):
+def is_valid_pair(
+    nbhs: list[list[bool]],
+    vu1: tuple[int, int],
+    vu2: tuple[int, int],
+) -> bool:
+    v_1, u_1 = vu1
+    v_2, u_2 = vu2
+    return not (nbhs[u_1][u_2] or nbhs[u_1][v_2] or nbhs[v_1][u_2] or nbhs[v_1][v_2])
+
+
+def is_valid(nbhs, vu1: tuple[int, int], current: list[tuple[int, int]]):
     """Check if edge is independent (orthogonal) from all edges in current set"""
-    v_1, u_1 = vu
-    for v_2, u_2 in current:
-        if nbhs[u_1][u_2] or nbhs[u_1][v_2] or nbhs[v_1][u_2] or nbhs[v_1][v_2]:
+    for vu2 in current:
+        if not is_valid_pair(nbhs, vu1, vu2) and not is_valid_pair(nbhs, vu2, vu1):
             return False
     return True
 

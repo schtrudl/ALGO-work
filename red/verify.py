@@ -49,7 +49,6 @@ for i, vu1 in enumerate(pairs):
             )
 
 # Check 3: The set is maximal
-
 best_n = mach(edges, nbhs, 0, [])
 if len(pairs) < len(best_n):
     errors.append(

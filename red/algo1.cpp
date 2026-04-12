@@ -52,8 +52,9 @@ int main(int argc, char const* argv[]) {
         for (size_t j = 0; j < n; j++) {
             int t;
             scanf("%d", &t);
+
             if (i < j) {
-                // XXX: why are indexes set this way
+                data[i * n + j] = t;
                 data[j * n + i] = t;
             }
         }

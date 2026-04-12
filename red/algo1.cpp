@@ -43,6 +43,7 @@ void obhod(size_t idx) {
 
 int main(int argc, char const* argv[]) {
     // read input data from stdin
+    // BTW: graph is always undirected
     scanf("%zu", &n);
     // IDEA: we can pack matrix in ints
     // IDEA: we do not need whole matrix

@@ -9,40 +9,14 @@ public class validate_solutions {
             return;
         }
 
-        File inputFolder = new File(args[0]);
-        File outputFolder = new File(args[1]);
+        File inputFile = new File(args[0]);
+            File outputFile = new File(args[1]);
 
-        if (!inputFolder.isDirectory() || !outputFolder.isDirectory()) {
-            System.out.println("Error: Invalid directory");
-            return;
-        }
-
-        File[] inputFiles = inputFolder.listFiles((dir, name) -> name.startsWith("input_") && name.endsWith(".txt"));
-
-        if (inputFiles == null || inputFiles.length == 0) {
-            System.out.println("Input files should have format: 'input_*.txt'.");
-            return;
-        }
-
-        Arrays.sort(inputFiles, Comparator.comparing(File::getName));
-
-        //validate all solutions
-        for (File inputFile : inputFiles) {
-            String outputName = inputFile.getName().replace("input_", "output_");
-            File outputFile = new File(outputFolder, outputName);
-
-            System.out.print("Validating " + inputFile.getName() + ": ");
-            if (!outputFile.exists()) {
-                System.out.println("NO SOLUTION FILE");
-                continue;
-            }
-
-            try {
-                validateSolution(inputFile, outputFile);
-                System.out.println("VALID (OK)");
-            } catch (Exception e) {
-                System.out.println("ERROR -> " + e.getMessage());
-            }
+        try {
+            validateSolution(inputFile, outputFile);
+            System.out.println("VALID (OK)");
+        } catch (Exception e) {
+            System.out.println("ERROR -> " + e.getMessage());
         }
     }
 

@@ -26,24 +26,53 @@ public class bin_cover {
             System.exit(1);
         }
 
-        String input = args[0]; // path of input folder
-        String output = args[1]; // path of output folder
+        String input_folder = args[0]; // path of input folder
+        String output_folder = args[1]; // path of output folder
 
-        // create new solver instance for each input file
-        // adjust parameters here if needed
-        // initial values set based on testing and benchmarking
-        BinCoveringSolver solver = new BinCoveringSolver(
-                new BigDecimal("0.71"),     // large item threshold
-                new BigDecimal("0.20"),     // reuse minimal load
-                new BigDecimal("0.14"),     // large item max overshoot
-                new BigDecimal("0.15")      // large item min bin load
-        );
+        File inputDir = new File(input_folder);
+        File outputDir = new File(output_folder);
 
-        List<BigDecimal> items = readFile(input); // read items from input file
-        List<List<Integer>> solution = solver.solve(items); // solve the instance and return solution
+        if (!inputDir.exists() || !inputDir.isDirectory()) {
+            throw new IllegalArgumentException("Input folder does not exist or is not a directory.");
+        }
+        
+        // open new output directory if it doesn't exist
+        if (!outputDir.exists()) {
+            outputDir.mkdirs();
+        }
 
-        writeSolution(output, solution); // write solution to output file
+        File[] files = inputDir.listFiles();
+        if (files == null) {
+            throw new IOException("Could not read input folder.");
+        }
+        Arrays.sort(files, Comparator.comparing(File::getName)); // sort input files by name for consistency
 
+        // Process each input file
+        for (File inputFile : files) {
+            if (!inputFile.isFile()) {
+                continue;
+            }
+            // create new solver instance for each input file
+            // adjust parameters here if needed
+            // initial values set based on testing and benchmarking
+            BinCoveringSolver solver = new BinCoveringSolver(
+                    new BigDecimal("0.71"),     // large item threshold
+                    new BigDecimal("0.20"),     // reuse minimal load
+                    new BigDecimal("0.14"),     // large item max overshoot
+                    new BigDecimal("0.15")      // large item min bin load
+            );
+
+            List<BigDecimal> items = readFile(inputFile.getAbsolutePath()); // read items from input file
+            List<List<Integer>> solution = solver.solve(items); // solve the instance and return solution
+
+            // set output file path
+            String outputFilePath = new File(
+                    output_folder,
+                    inputFile.getName().replace("input", "output")
+            ).getAbsolutePath();
+
+            writeSolution(outputFilePath, solution); // write solution to output file
+        }
     }
 
     // readFile: method for reading item inputs from a file
